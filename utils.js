@@ -1,4 +1,4 @@
-function includeHTML(attribute) {
+const includeHTML = (attribute) => {
   const tags = document.querySelectorAll("*");
   tags.forEach((tag) => {
     const element = tag;
@@ -13,13 +13,12 @@ function includeHTML(attribute) {
           if (this.status == 404) {
             element.innerHTML = "Page not found.";
           }
-          element.removeAttribute(attribute);
         }
       };
       xhttp.open("GET", file, true);
       xhttp.send();
     }
   });
-}
+};
 
 export { includeHTML };
