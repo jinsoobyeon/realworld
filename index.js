@@ -1,54 +1,4 @@
-// import { includeHTML } from "./utils.js";
-
-// window.onload = () => {
-//   const navLink = document.querySelectorAll(".nav-link");
-
-//   const route = (state, url) => {
-//     navLink.forEach((link) => {
-//       link.classList.remove("active");
-//     });
-//     document.querySelector(`#${state.title}`).classList.add("active");
-//     history.pushState(state, state.title, url);
-//     includeHTML(state.file);
-//   };
-
-//   history.replaceState(
-//     { file: "home-page-html", title: "home" },
-//     "home",
-//     "/#/"
-//   );
-//   includeHTML("home-page-html");
-
-//   window.addEventListener("popstate", () => {
-//     navLink.forEach((link) => {
-//       link.classList.remove("active");
-//     });
-//     document.querySelector(`#${history.state.title}`).classList.add("active");
-//     includeHTML(history.state.file);
-//   });
-
-//   conduit.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     route({ file: "home-page-html", title: "home" }, "/#/");
-//   });
-
-//   home.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     route({ file: "home-page-html", title: "home" }, "/#/");
-//   });
-
-//   signIn.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     route({ file: "login-page-html", title: "signIn" }, "/#/login");
-//   });
-
-//   signUp.addEventListener("click", (event) => {
-//     event.preventDefault();
-//     route({ file: "register-page-html", title: "signUp" }, "/#/register");
-//   });
-// };
-
-const homePage = {
+const HomePage = {
   template: `<div class="home-page">
     <div class="banner">
       <div class="container">
@@ -130,9 +80,53 @@ const homePage = {
   </div>`,
 };
 
-new Vue({
-  el: "#wrapper",
-  components: {
-    "home-page": homePage,
+const LoginPage = {
+  template: `<div class="auth-page">
+    <div class="container page">
+      <div class="row">
+        <div class="col-md-6 offset-md-3 col-xs-12">
+          <h1 class="text-xs-center">Sign up</h1>
+          <p class="text-xs-center">
+            <a href="">Have an account?</a>
+          </p>
+          <ul class="error-messages">
+            <li>That email is already taken</li>
+          </ul>
+          <form>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="text" placeholder="Email">
+            </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg" type="password" placeholder="Password">
+            </fieldset>
+              <button class="btn btn-lg btn-primary pull-xs-right">
+                Sign up
+              </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>`,
+};
+
+const routes = [
+  {
+    path: "/",
+    component: HomePage,
   },
+  {
+    path: "/login",
+    component: LoginPage,
+  },
+];
+
+const router = new VueRouter({
+  routes,
 });
+
+new Vue({
+  router,
+}).$mount("#app");
