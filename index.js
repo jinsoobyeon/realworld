@@ -162,4 +162,23 @@ const router = new VueRouter({
 
 new Vue({
   router,
+  updated: () => {
+    const navLink = document.querySelectorAll(".nav-link");
+
+    navLink.forEach((nav) => {
+      nav.classList.remove("active");
+    });
+    if (location.hash === "#/") {
+      navLink[0].classList.add("active");
+      return;
+    }
+    if (location.hash === "#/login") {
+      navLink[1].classList.add("active");
+      return;
+    }
+    if (location.hash === "#/register") {
+      navLink[2].classList.add("active");
+      return;
+    }
+  },
 }).$mount("#app");
