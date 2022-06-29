@@ -131,7 +131,7 @@ const RegisterPage = {
             <fieldset class="form-group">
               <input class="form-control form-control-lg" type="password" placeholder="Password">
             </fieldset>
-              <button class="btn btn-lg btn-primary pull-xs-right">
+              <button class="btn btn-lg btn-primary pull-xs-right" v-on:click="getData">
                 Sign up
               </button>
           </form>
@@ -139,6 +139,14 @@ const RegisterPage = {
       </div>
     </div>
   </div>`,
+  methods: {
+    getData: (event) => {
+      event.preventDefault();
+      fetch("https://jsonplaceholder.typicode.com/todos/1")
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    },
+  },
 };
 
 const routes = [
@@ -160,25 +168,32 @@ const router = new VueRouter({
   routes,
 });
 
+const handleNavColor = () => {
+  const navLink = document.querySelectorAll(".nav-link");
+
+  navLink.forEach((nav) => {
+    nav.classList.remove("active");
+  });
+  if (location.hash === "#/") {
+    navLink[0].classList.add("active");
+    return;
+  }
+  if (location.hash === "#/login") {
+    navLink[1].classList.add("active");
+    return;
+  }
+  if (location.hash === "#/register") {
+    navLink[2].classList.add("active");
+    return;
+  }
+};
+
 new Vue({
   router,
+  mounted: () => {
+    handleNavColor();
+  },
   updated: () => {
-    const navLink = document.querySelectorAll(".nav-link");
-
-    navLink.forEach((nav) => {
-      nav.classList.remove("active");
-    });
-    if (location.hash === "#/") {
-      navLink[0].classList.add("active");
-      return;
-    }
-    if (location.hash === "#/login") {
-      navLink[1].classList.add("active");
-      return;
-    }
-    if (location.hash === "#/register") {
-      navLink[2].classList.add("active");
-      return;
-    }
+    handleNavColor();
   },
 }).$mount("#app");
